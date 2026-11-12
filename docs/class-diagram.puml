@@ -1,0 +1,66 @@
+@startuml
+hide methods
+skinparam classAttributeIconSize 0
+
+class Department {
+  +id: Long
+  +name: String
+  +description: String
+}
+
+class Employee {
+  +id: Long
+  +employeeNumber: String
+  +lastName: String
+  +firstName: String
+  +email: String
+  +position: String
+  +hireDate: LocalDate
+}
+
+class Contract {
+  +id: Long
+  +type: ContractType
+  +startDate: LocalDate
+  +endDate: LocalDate
+  +grossSalary: BigDecimal
+}
+
+class LeaveType {
+  +id: Long
+  +code: String
+  +name: String
+  +daysPerYear: int
+}
+
+class LeaveRequest {
+  +id: Long
+  +startDate: LocalDate
+  +endDate: LocalDate
+  +workingDays: int
+  +reason: String
+  +status: RequestStatus
+  +managerComment: String
+}
+
+enum ContractType {
+  CDI
+  CDD
+  STAGE
+}
+
+enum RequestStatus {
+  EN_ATTENTE
+  APPROUVEE
+  REFUSEE
+  ANNULEE
+}
+
+Department "1" -- "0..*" Employee : affecte
+Employee "0..1" --> "0..*" Employee : manager / équipe
+Employee "1" -- "0..*" Contract : contrats
+Employee "1" -- "0..*" LeaveRequest : demandes
+LeaveType "1" -- "0..*" LeaveRequest : type
+Contract --> ContractType
+LeaveRequest --> RequestStatus
+@enduml

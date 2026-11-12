@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: atlasrh-api
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5434/atlasrh}
+    username: ${DB_USERNAME:atlasrh}
+    password: ${DB_PASSWORD:atlasrh}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+  jackson:
+    default-property-inclusion: non_null
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+
+server:
+  port: ${SERVER_PORT:8082}
+
+logging:
+  level:
+    root: INFO
+    com.atlasrh: INFO
+    org.springframework.web: INFO
